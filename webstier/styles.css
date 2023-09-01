@@ -1,0 +1,178 @@
+:root{
+    /* CSS HEX */
+    --jet: #12100E;
+    --azure-web: #eafdf8;
+    --battleship-gray: #8b8982;
+    --chefchaouen-blue: #3f8efc;
+    --celtic-blue: #276fbf;
+}
+
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+label{
+    margin-left: 30px;
+}
+
+body{
+    margin-top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--azure-web);
+}
+
+
+#wifi, #broker, #wifi_mode{
+    display: flex;
+    flex-direction: column;
+}
+
+input{
+    width: 100px;
+    margin-bottom: 25px;
+    margin-left: 10px;
+    width: 20%;
+}
+
+#choose{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 50px;;
+}
+
+#config{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1.3em;
+}
+
+section{
+    width: 100%;
+}
+
+h1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+#ap, #ap1{
+    width: 1.5em;
+    margin: 0px;
+    margin-left: 20px;
+}
+
+.ap{
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+}
+
+p{
+    margin-top: 15px;
+    margin-left: 25px;
+    margin-right: 0;
+    font-size: 1.3em;
+    color: var(--jet);
+}
+
+#submit{
+    margin-top: 10px;
+    width: 20%;
+    margin-left: 30px;
+}
+
+#last{
+    margin-bottom: 30px;
+}
+
+#choix2{
+    height: 100%;
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.radio{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media screen and (max-width: 800px){
+
+    label{
+        font-size: 0.8em;
+        word-wrap: break-word;
+    }
+
+}
+
+@media screen and (max-width: 650px){
+
+    label{
+        font-size: 0.7em;
+    }
+
+}
+
+@media screen and (max-width: 580px){
+
+    #ap, #ap1{
+        width: 1em;
+    }
+
+    #wifi1, #wifi2, #broker1, #broker2, #broker3, #broker4{
+    display: flex;
+        flex-direction: column;
+    }
+
+    input{
+        margin-left: 30px;
+        width: 30%;
+    }
+
+    #choose{
+        margin-top: 5px;
+        flex-direction: column;
+    }
+}
+
+
+@media screen and (max-width: 455px){
+
+    h1{
+        font-size: 1.5em;
+    }
+
+    p{
+        font-size: 1em;
+    }
+
+    label{
+        word-wrap: break-word;
+    }
+
+    #time{
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
+@media screen and (max-width: 335px){
+
+    p{
+        font-size: 0.8em;
+    }
+}
