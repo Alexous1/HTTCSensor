@@ -1,0 +1,10 @@
+void spif();
+void deepSleep();
+float test(float z);
+void rephresh();
+void getBatValue();
+void Wifi();
+void WebServer();
+void connectMqtt();
+void sendValueMqtt();
+void WebSite();
