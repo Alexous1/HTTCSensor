@@ -1,24 +1,22 @@
 
 #include <Arduino.h>
 #include "BaseFunction.h"
-
+#include <Wire.h>
+#define I2C_SDA 18
+#define I2C_SCL 19
 
 
 
 void setup() {
 
-  // initialisation du port série
+  // Initialise the ESP32 C3, wire, serial port and I2C bus
+  Wire.begin(I2C_SDA, I2C_SCL);
+  pinMode(3, OUTPUT);
+  pinMode(1, INPUT);
+  digitalWrite(3, HIGH);
   Serial.begin(115200);
-  // initialise la broche d'alimentationa
-  pinMode(23, OUTPUT);
-  digitalWrite(23, HIGH);
-  // initialise la broche battery
-  pinMode(35, INPUT);
-  // initialise la broche du web buton
-  pinMode(19, INPUT);
 
   //---------------------------------------------------------SPIFFS
-
 
   spif();
 
@@ -27,24 +25,16 @@ void setup() {
 
   Wifi();
 
-
-  //---------------------------------------------------------FOUND THE SENSOR
-
+  //---------------------------------------------------------FOUND THE SENSOR AND RETRIEVES THE VALUES OF THE SENSOR
 
   rephresh();
 
-
-  //---------------------------------------------------------BATTERY VALUE
-
-
-  getBatValue();
-
-
-  //--------------------------------------------------------- MQTT
+  //--------------------------------------------------------- CONNECT TO THE MQTT BROKER AND SEND FEW MESSAGES WITH THE DATA TO GET THE VALUES OF THE SENSOR IN HOME ASSISTANT
 
   connectMqtt();
   sendValueMqtt();
 
+  //--------------------------------------------------------- WE CAN HEDGED A WEBSITE ON THE ESP32 TO SET UP THE SENSORS
 
   WebSite();
 
@@ -52,6 +42,7 @@ void setup() {
 
 void loop() {
 
+  //--------------------------------------------------------- AFTER GET AND POST ALL OF THE INFORMATIONS ABOUT THE AIR QUALITY THE ESP32C3 FALL IN SLEEP
   deepSleep();
 
 }
