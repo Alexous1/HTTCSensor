@@ -7,16 +7,18 @@
     --celtic-blue: #276fbf;
 }
 
-
+/* */
 *{
     margin: 0;
     padding: 0;
 }
 
+/* set a margin for all the label */
 label{
     margin-left: 30px;
 }
 
+/*  set the sizeof the body */
 body{
     margin-top: 0;
     width: 100vw;
@@ -24,12 +26,7 @@ body{
     background-color: var(--azure-web);
 }
 
-
-#wifi, #broker, #wifi_mode{
-    display: flex;
-    flex-direction: column;
-}
-
+/* define the characteristics of the input question */
 input{
     width: 100px;
     margin-bottom: 25px;
@@ -37,24 +34,7 @@ input{
     width: 20%;
 }
 
-#choose{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 50px;;
-}
-
-#config{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-size: 1.3em;
-}
-
-section{
-    width: 100%;
-}
-
+/* define the characteristics of all the h1 title */
 h1{
     display: flex;
     align-items: center;
@@ -64,18 +44,7 @@ h1{
     font-size: 2em;
 }
 
-#ap, #ap1{
-    width: 1.5em;
-    margin: 0px;
-    margin-left: 20px;
-}
-
-.ap{
-    display: flex;
-    flex-direction: row;
-    width: 400px;
-}
-
+/* define the characteristics of the the text */
 p{
     margin-top: 15px;
     margin-left: 25px;
@@ -84,31 +53,21 @@ p{
     color: var(--jet);
 }
 
+/* define the characteristics of the the send button */
 #submit{
     margin-top: 10px;
     width: 20%;
     margin-left: 30px;
 }
 
-#last{
-    margin-bottom: 30px;
-}
-
-#choix2{
-    height: 100%;
-    margin-top: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
+/* define the characteristics of the the text radio button choices */
 .radio{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-
+/* set the characteristics of the text font for a screen width of 800px */
 @media screen and (max-width: 800px){
 
     label{
@@ -118,6 +77,7 @@ p{
 
 }
 
+/* set the characteristics of the text font for a screen width of 650px */
 @media screen and (max-width: 650px){
 
     label{
@@ -126,6 +86,7 @@ p{
 
 }
 
+/* set the characteristics of the text font for a screen width of 580 */
 @media screen and (max-width: 580px){
 
     #ap, #ap1{
@@ -149,6 +110,7 @@ p{
 }
 
 
+/* set the characteristics of the text font for a screen width of 455 */
 @media screen and (max-width: 455px){
 
     h1{
@@ -170,6 +132,7 @@ p{
 
 }
 
+/* set the characteristics of the text font for a screen width of 335 */
 @media screen and (max-width: 335px){
 
     p{
