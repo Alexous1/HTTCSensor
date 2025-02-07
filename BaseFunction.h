@@ -1,4 +1,5 @@
 void spif();
+void getBatValue();
 void deepSleep();
 float test(float z);
 void rephresh();
