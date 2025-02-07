@@ -1,83 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
-    <meta charset="UTF-8">
-    <title>HTTCSensor</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Serveur ESP32</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="w3.css">
+    <script type="text/javascript" src="script.js"></script>
 </head>
-<body>
 
-    <section id='config'>
+<body class="w3-animate-opacity">
 
-        <h1>Configuration</h1>
-
-
-        <div id="wifi">
-            <div id="wifi1">
-                <label for="ssid">Veuillez renseigner le nom du wifi</label>
-                <input type="text" id="ssid">
-            </div>
-
-
-            <div id="wifi2">
-                <label for="wifi_password">Veuillez renseigner le mot de passe du wifi</label>
-                <input type="password" id="wifi_password">
-            </div>
+        <!-- set the title of the website -->
+        <div class="w3-card w3-blue w3-padding-small w3-center">
+            <h1>HTTCSensor</h1>
         </div>
 
-        <div id="broker">
-            <div id="broker1">
-                <label for="mqtt_ip">Veuillez renseigner l'adresse ip du broker</label>
-                <input type="text" id="mqtt_ip">
-            </div>
+    <section>
 
-            <div id="broker2">
-                <label for="mqtt_password">Veuillez renseigner le password du broker</label>
-                <input type="password" id="mqtt_password">
-            </div>
+        <!-- create a form with all password and id to connect the esp32 to MQTT broker or WIFI -->
+        <form class="w3-container w3-card w3-light-grey w3-margin" style="padding-bottom: 20px;">
 
-            <div id="broker3">
-                <label for="mqtt_topic">Veuillez renseigner le topic pour les données</label>
-                <input type="text" id="mqtt_topic">
-            </div>
+            <!-- create an input forWIFI SSID  -->
+            <h1>Configuration</h1>
+            <p><label>WIFI SSID</label>
+            <input class="w3-input w3-border" name="wifiSsid" type="text" id="wifi_ssid"></p>
 
-            <div id="broker4">
-                <label for="mqtt_username">Veuillez renseigner l'username pour se connecter au broker</label>
-                <input type="text" id="mqtt_username">
-            </div>
-        </div>
+            <!-- create an input for WIFI PASSWORD  -->
+            <p><label>WIFI PASSWORD</label>
+            <input class="w3-input w3-border" name="wifiPassword" type="password" id="wifi_password"></p>
 
-         <div id="time">
-            <label for="time_send">Veuillez renseigner le temps entre chaque envoie de données</label>
-            <input type="number" max="14" id="time_send">
-         </div>
+            <!-- create an input for ID Adress of the MQTT broker  -->
+            <p><label>ADRESSE IP DU BROKER MQTT</label>
+            <input class="w3-input w3-border" name="mqttIp" id="ip_broker" type="text"></p>
 
-        <div id="wifi_mode">
-            <label for="ap">Veuillez renseigner si vous acceder au website avec un AP ou directement sur votre reseau (voir vidéo de présentation)</label>
-            <div id="choose">
-                <div class="ap">
-                    <label for="ap" class="radio" >AP (Access Point)</label>
-                    <input type="radio" name="ap" id="ap" class="radio">
-                </div>
-                <div class="ap">
-                    <label for="ap1" class="radio" id="choix2" >Sur le réseau auquel il est connecté</label>
-                    <input type="radio" name="ap" class="radio" id="ap1">
-                </div>
-            </div>
-        </div>
+            <!-- create an input for MQTT broker PASSWORD  -->
+            <p><label>PASSWORD DU BROKER MQTT</label>
+            <input class="w3-input w3-border" name="mqttPassword" id="password_broker" type="password"></p>
 
-        <input type="submit" size="10" id="submit">
+            <!-- create an input for MQTT broker USERNAME  -->
+            <p><label>USERNAME POUR SE CONNECTER AU BROKER MQTT</label>
+            <input class="w3-input w3-border" name="mqttUser" id="user_broker" type="text"></p>
+
+            <!-- create an input for MQTT broker topic  -->
+            <p><label>TOPIC DU BROKER MQTT SUR LEQUEL ON ENVOIE LES DONNÉES</label>
+            <input class="w3-input w3-border" name="mqttTopic" id="topic_broker" type="text"></p>
+
+            <!--create an input to define time between each send to give -->
+            <p>DELAI ENTRE CHAQUE ENVOIE DE DONNÉES</p>
+
+            <input class="w3-radio" type="radio" name="gender" value="3">
+            <label style="margin-right: 20px;">3min</label>
+
+            <input class="w3-radio" type="radio" name="gender" value="5">
+            <label style="margin-right: 20px;">5min</label>
+
+            <input class="w3-radio" type="radio" name="gender" value="10">
+            <label style="margin-right: 20px;">10min</label>
+
+            <input class="w3-radio" type="radio" name="gender" value="15">
+            <label style="margin-right: 20px;">15min</label>
+
+            <!-- define it the esp32 is connected to th wifi or if he set an access point -->
+            <p style="margin-top: 25px; margin-bottom: 0px;">Le WebSite du capteur est sur :</p>
+             <select class="w3-select" name="option" id="select" style="margin-top: 10px;">
+                 <option value="1" > AP (Access Point)</option>
+                 <option value="2" >Sur le réseau auquel il est connecté</option>
+            </select>
+
+            <!-- create a button to send the value ot the form -->
+            <button onclick="getValue()" class="w3-button w3-round-xxlarge w3-blue w3-hover-indigo" style="margin-top: 20px; transition: background-color 0.5s;" id="submit">SEND</button>
+        </form>
+
     </section>
 
 
-    <section id="info">
-        <h1>Information</h1>
-        <p>Il fait actuellement dans la 30 degrès pièce/dehors.</p>
-        <p>Il y a actuellement d'humidité 51% dans la pièce/dehors.</p>
-        <p>Il fait actuellement 300 ppm dans la pièce/dehors.</p>
-        <p>Il fait actuellement 0 ppb dans la pièce/dehors.</p>
-        <p id="last" >Le taux de charge de la batterie est de 56 %.</p>
-    </section>
+    <section>
 
+        <!-- displays the values of a temperate -->
+        <div class="w3-margin w3-card w3-row">
+            <p class="w3-center w3-xxlarge">Temperature : <span id="tempValue"></span> degrés</p>
+        </div>
+
+        <!-- displays the values of a the humidity -->
+        <div class="w3-margin w3-card w3-row">
+            <p class="w3-center w3-xxlarge">Humidity : <span id="humValue"></span> %</p>
+        </div>
+
+        <!-- displays the values of a co2 -->
+        <div class="w3-margin w3-card w3-row">
+            <p class="w3-center w3-xxlarge">CO2 : <span id="co2Value"></span> ppm</p>
+        </div>
+
+        <!-- displays the values of a tvoc -->
+        <div class="w3-margin w3-card w3-row">
+            <p class="w3-center w3-xxlarge">TVOC : <span id="tvocValue"></span> ppb</p>
+        </div>
+
+        <!-- displays the values of the battery -->
+        <div class="w3-margin w3-card w3-row">
+            <p class="w3-center w3-xxlarge">Batterie : <span id="batt"></span> %</p>
+        </div>
+
+
+    </section>
 </body>
+
 </html>
