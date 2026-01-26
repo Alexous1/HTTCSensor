@@ -95,20 +95,29 @@ main_win = MainWin()
 # ===========================================
 class PlotWin:
     def __init__(self):
+        # plot window id
         self.winID = "plot_win"
         self.winID2 = "plot_win2"
         self.winID3 = "plot_node"
+
+        # plot id
         self.plotID = "plot"
         self.plotID2 = "plot2"
         self.plotID3 = "plot3"
+
+        # data window id
         self.datawin1ID = "data_win_tvoc"
         self.datawin2ID = "data_win_co2"
-        self.table_tvoc = "tvoc_table"
-        self.table_co2 = "co2_table"
         self.datawin3ID = "data_win_temp"
         self.datawin4ID = "data_win_hum"
+
+        # data table id
+        self.table_tvoc = "tvoc_table"
+        self.table_co2 = "co2_table"
         self.table_temp = "temp_table"
         self.table_hum = "hum_table"
+        
+        # other id
         self.inputText = "input_text"
         self.serialPort = "serialPort"
         self.datawin5ID = "data_serial_port"
@@ -116,29 +125,36 @@ class PlotWin:
         self.Y = ""
         self.next_row_id = 0
 
-        # Fenêtre graphique
+        # Fenêtre graphique TVOC-CO2
         with dpg.window(label="Graphique Capteurs", pos=(25, 50), width=1200, height=900, tag=self.winID):
             with dpg.group(horizontal=True):
                 dpg.add_button(label="Exporter Matplotlib", callback=self.plot_canvas)
-
+            # Plot
             with dpg.plot(label="Capteurs", height=-1, width=-1, tag=self.plotID):
                 dpg.add_plot_legend()
+                # Axes x
                 dpg.add_plot_axis(dpg.mvXAxis, label="Temps (s)", tag="x_axis0")
 
+                # Axes y
                 with dpg.plot_axis(dpg.mvYAxis, label="TVOC (ppb)", tag="y_axis00"):
                     dpg.add_line_series([], [], label="TVOC (ppb)", tag="tvoc_series")
 
+                # Axes y
                 with dpg.plot_axis(dpg.mvYAxis, label="eCO2 (ppm)", tag="y_axis01"):
                     dpg.add_line_series([], [], label="eCO2 (ppm)", tag="co2_series")
 
+        # Fenêtre graphique TEMP-HUM
         with dpg.window(label="Graphique Capteurs2", pos=(25, 100), width=1200, height=900, tag=self.winID2):
-
             with dpg.plot(label="Capteurs", height=-1, width=-1, tag=self.plotID2):
                 dpg.add_plot_legend()
+                # Axe x
                 dpg.add_plot_axis(dpg.mvXAxis, label="Temps (s)", tag="x_axis1")
+
+                # Axe y
                 with dpg.plot_axis(dpg.mvYAxis, label="Température °C", tag="y_axis10"):
                     dpg.add_line_series([], [], label="Température °C", tag="Température_series")
 
+                # Axe y
                 with dpg.plot_axis(dpg.mvYAxis, label="Humidité %", tag="y_axis11"):
                     dpg.add_line_series([], [], label="Humidité %", tag="Humidité_series")
 
@@ -148,19 +164,26 @@ class PlotWin:
             with dpg.plot(label="Capteurs", height=-1, width=-1, tag=self.plotID3):
                 dpg.add_plot_legend()
                 
-                
+                # adds the cursor on the graph to have precise values
                 dpg.add_drag_line(label="Start", color=[8, 204, 23, 255], vertical=True, default_value=0, tag="dline2")
                 dpg.add_drag_line(label="Finish", color=[222, 20, 20, 255], vertical=True, default_value=1, tag="dline3")
                 dpg.add_drag_line(label="dline1", color=[255, 255, 0, 255], vertical=False, default_value=1, tag="dline1")
+
+                # create the plot axes x
                 dpg.add_plot_axis(dpg.mvXAxis, label="Temps (s)", tag="x_axis2")
+
+                # axe y
                 with dpg.plot_axis(dpg.mvYAxis, label="Valeur", tag="y_axis2"):
                     dpg.add_line_series([], [], label="", tag="node_first_serie")
+
+                # axe y    
                 with dpg.plot_axis(dpg.mvYAxis, label="Valeur", tag="y_axis3"):    
                     dpg.add_line_series([], [], label="", tag="second")
 
         # Fenêtre Données TVOC
         with dpg.window(label="Données TVOC", tag=self.datawin1ID, pos=(1250, 50), width=300, height=900, show=True):
             dpg.add_button(label="delete", callback= lambda : self.resetValue(self.table_tvoc))
+            # tableau de donnée
             with dpg.table(header_row=True, tag=self.table_tvoc):
                 dpg.add_table_column(label="Temps (s)")
                 dpg.add_table_column(label="TVOC (ppb)")
@@ -168,6 +191,7 @@ class PlotWin:
         # Fenêtre Données CO2       
         with dpg.window(label="Données CO2", tag=self.datawin2ID, pos=(1575, 50), width=300, height=900, show=True):
             dpg.add_button(label="delete", callback= lambda : self.resetValue(self.table_co2))
+            # tableau de donnée
             with dpg.table(header_row=True, tag=self.table_co2):               
                 dpg.add_table_column(label="Temps (s)")
                 dpg.add_table_column(label="CO2 (ppm)")
@@ -175,6 +199,7 @@ class PlotWin:
         # Fenêtre Données HUM  
         with dpg.window(label="Données Humidity", tag=self.datawin4ID, pos=(1575, 50), width=300, height=900, show=True):
             dpg.add_button(label="delete", callback= lambda : self.resetValue(self.table_hum))
+            # tableau de donnée
             with dpg.table(header_row=True, tag=self.table_hum):               
                 dpg.add_table_column(label="Temps (s)")
                 dpg.add_table_column(label="Humidity (%)")
@@ -182,11 +207,12 @@ class PlotWin:
         # Fenêtre Données HUM  
         with dpg.window(label="Données Température", tag=self.datawin3ID, pos=(1575, 50), width=300, height=900, show=True):
             dpg.add_button(label="delete", callback= lambda : self.resetValue(self.table_temp))
+            # tableau de donnée
             with dpg.table(header_row=True, tag=self.table_temp):               
                 dpg.add_table_column(label="Temps (s)")
                 dpg.add_table_column(label="Température (%)")
 
-
+        # Fenêtre pour récuperer les statistiques
         with dpg.window(label="Serial Port", tag=self.datawin5ID, pos=(1275, 50), width=500, height=300, show=True):
             dpg.add_input_text(label="Command", default_value="", tag=self.inputText, width=320)
             dpg.add_text("Output will appear here", tag=self.serialPort)
@@ -198,11 +224,12 @@ class PlotWin:
                 dpg.add_theme_color(dpg.mvThemeCol_HeaderActive, (0,0,0,0), category=dpg.mvThemeCat_Core)
                 dpg.add_theme_color(dpg.mvThemeCol_Header, (0,0,0,0), category=dpg.mvThemeCat_Core)
 
-
+        # create the window to show stat of the data selection
         with dpg.window(label="Test", tag="efzdf", pos=(1275, 50), width=500, height=300, show=True):
+            # add a button to actualiste the stat
             dpg.add_button(label="actualise", callback= lambda : self.getData())
             with dpg.table(header_row=True, tag="dataChoosen", clipper=True):
-                # [début, fin, max, min, moyenne, deltaS, deltaM]
+                # [NameValue, début, fin, max, min, moyenne, deltaS, deltaM, delButton]
                 dpg.add_table_column(label="Wv")
                 dpg.add_table_column(label="Fv")
                 dpg.add_table_column(label="Lv")
@@ -217,17 +244,20 @@ class PlotWin:
         def link_callback(sender, app_data):
             # app_data -> (link_id1, link_id2)
             dpg.add_node_link(app_data[0], app_data[1], parent=sender)
-
+            # get the value of the entry input of the node window
             self.X = dpg.get_value("X")
             self.Y = dpg.get_value("Y")
 
+            # actualise an 
             dpg.set_value("fonction_output", f"{self.X}=f({self.Y})")
 
+        # create the plot with node parameters
         def create():
             self.X = dpg.get_value("X")
             self.Y = dpg.get_value("Y")
             dpg.show_item("plot_node")
 
+            # create first y axes according to the parameters
             if self.X == "Humidité %":
                 dpg.set_item_label("node_first_serie", "Humidité %")
                 dpg.set_item_label("y_axis2", "Humidité %")
@@ -241,6 +271,7 @@ class PlotWin:
                 dpg.set_item_label("node_first_serie", "TVOC (ppb)")
                 dpg.set_item_label("y_axis2", "eCO2 (ppm)")
 
+            # create second y axes according to the parameters
             if self.Y == "Humidité %":
                 dpg.set_item_label("second", "Humidité %")
                 dpg.set_item_label("y_axis3", "Humidité %")
@@ -259,25 +290,30 @@ class PlotWin:
             # app_data -> link_id
             dpg.delete_item(app_data)
 
-        with dpg.window(label="Tutorial", width=400, height=400):
-
+        # create the node interface
+        with dpg.window(label="Node interface", width=400, height=400):
             with dpg.node_editor(callback=link_callback, delink_callback=delink_callback):
+                # first node input
                 with dpg.node(label="Node 1"):
+                    # create drop-down menu
                     with dpg.node_attribute(label="Node A1", attribute_type=dpg.mvNode_Attr_Output):
                         dpg.add_combo(label="X", items=["Humidité %", "Température °C", "eCO2 (ppm)", "TVOC (ppb)"], tag="X")
                         dpg.add_combo(label="Y", items=["Humidité %", "Température °C", "eCO2 (ppm)", "TVOC (ppb)"], tag="Y")
 
+                # create the node button to create the plot
                 with dpg.node(label="Node 2"):
                     with dpg.node_attribute(label="Node A3"):
                         dpg.add_text("y=f(x)", tag="fonction_output")
                         dpg.add_button(label="create the plot", width=200, callback=create)
 
+    # function to delete the row selectionned of the data stat 
     def clb_selectable(self, sender, app_data, user_data):
         if dpg.does_item_exist(user_data):
             dpg.delete_item(user_data)
 
     def getData(self):
-        # cette fonction permet 
+        # this function make all the stat about the data selection
+        # get the 
         xi = float(dpg.get_value("dline2"))
         xf = float(dpg.get_value("dline3"))
         num = []
@@ -291,7 +327,7 @@ class PlotWin:
             if xi < t < xf:
                 num.append(i)
 
-        # Récupération des données
+        # get the data (create a list with all data) for the data selectionned
         if self.X == "Humidité %":
             for i in num:
                 data1.append(humidity_data[i])
@@ -326,6 +362,7 @@ class PlotWin:
 
 
         if data1:  # vérifier que data1 n'est pas vide
+            # for each parameters, add a value
             finalData1[0] = self.X
             finalData1[1] = data1[1]
             finalData1[2] = data1[-1]
@@ -337,6 +374,7 @@ class PlotWin:
             finalData1[7] = finalData1[3] - finalData1[4]
 
         if data2:  # vérifier que data1 n'est pas vide
+            # for each parameters, add a value
             finalData2[0] = self.Y
             finalData2[1] = data2[1]
             finalData2[2] = data2[-1]
